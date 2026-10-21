@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>POLYA-MATH QUEST</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#main">Lewati ke konten</a>
+<div id="banner" role="status"></div>
+<header class="top">
+  <div class="brand">
+    <svg viewBox="0 0 48 48" width="44" height="44" aria-hidden="true"><rect x="8" y="12" width="32" height="26" rx="9" fill="#C4B5FD"/><rect x="21" y="4" width="6" height="8" fill="#3B82F6"/><circle cx="24" cy="4" r="3" fill="#FBBF24"/><circle cx="17" cy="25" r="4" fill="#172554"/><circle cx="31" cy="25" r="4" fill="#172554"/><path d="M17 33q7 4 14 0" stroke="#172554" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>
+    <div><h1>POLYA-MATH QUEST</h1><p>Pahami Masalahnya, Rancang Strateginya, Temukan Solusinya!</p></div>
+  </div>
+  <nav aria-label="Navigasi utama">
+    <button data-act="go" data-v="home">Beranda</button>
+    <button data-act="go" data-v="missions">Misi</button>
+    <button data-act="go" data-v="dash">Dashboard Guru</button>
+  </nav>
+</header>
+<main id="main" tabindex="-1">
+  <section id="home" data-view>
+    <div class="card hero">
+      <h2>Mulai petualangan numerasi</h2>
+      <p>Isi kode dari gurumu. Jangan tulis nama lengkap.</p>
+      <div class="grid3">
+        <label>Kode siswa<input id="stu" autocomplete="off" aria-describedby="perr" placeholder="mis. SISWA07"></label>
+        <label>Kode kelas<input id="cls" autocomplete="off" placeholder="mis. VI-A"></label>
+        <label>Kode sesi<input id="ses" autocomplete="off" placeholder="mis. PERTEMUAN1"></label>
+      </div>
+      <p id="perr" class="err" role="alert"></p>
+      <button class="big" data-act="begin">Mulai Petualangan</button>
+      <details><summary>Petunjuk Penggunaan</summary>
+        <p>Pilih misi, kerjakan empat tahap Polya pada setiap soal, tekan <b>Periksa</b>. Tombol <b>Bantuan</b> boleh dipakai kapan saja dan tidak mengurangi nilai materi.</p></details>
+    </div>
+    <div class="grid2" id="homeMissions"></div>
+    <div class="card"><h2>Empat tahap Polya</h2>
+      <ol class="steps"><li><b>Memahami masalah</b> – apa yang diketahui dan ditanyakan?</li><li><b>Menyusun rencana</b> – pilih strategi dan operasi.</li><li><b>Melaksanakan rencana</b> – hitung dengan teliti.</li><li><b>Memeriksa kembali</b> – apakah hasilnya masuk akal?</li></ol></div>
+  </section>
+  <section id="missions" data-view hidden></section>
+  <section id="activity" data-view hidden></section>
+  <section id="result" data-view hidden></section>
+  <section id="dash" data-view hidden></section>
+</main>
+<script src="script.js"></script>
+</body>
+</html>

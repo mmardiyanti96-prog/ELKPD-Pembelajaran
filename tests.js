@@ -1,0 +1,16 @@
+const assert = require('assert'); const T = require('./script.js'); let n = 0;
+const t = (name, fn) => { fn(); n++; console.log('OK  ' + name); };
+const { F, mul, div, eq, fmt, parseNum, expected, misplaced } = T;
+t('4 x 3/4 = 3', () => assert.strictEqual(fmt(mul(F(3, 4), F(4))), '3'));
+t('3/4 : 3 = 1/4', () => assert.strictEqual(fmt(div(F(3, 4), F(3))), '1/4'));
+t('kunci M1 latihan dasar sesuai hitungan manual', () => assert.deepStrictEqual(T.M1.filter(i => !i.hots).map(i => fmt(expected(i))), ['3', '1/4', '2', '1/5', '9/4', '1/6', '5/2', '3/20']));
+t('parse pecahan, campuran, desimal koma', () => { assert.ok(eq(parseNum('3/4'), F(3, 4))); assert.ok(eq(parseNum('0,6'), F(3, 5))); assert.ok(eq(parseNum('1 1/2'), F(3, 2))); assert.ok(eq(parseNum('12/4'), F(3))); });
+t('parse menolak input tidak valid', () => { ['0.6', '1/0', 'abc', '', '0,66', '-1'].forEach(x => assert.strictEqual(parseNum(x), null)); });
+t('urutan 3/4,0,6,4/5,0,7', () => { const r = ['0,6', '0,7', '3/4', '4/5'].map(parseNum); assert.strictEqual(misplaced(r, 'asc'), 0); assert.ok(misplaced(['3/4', '0,6', '4/5', '0,7'].map(parseNum), 'asc') > 0); });
+t('soal urutan M2 tidak ada nilai kembar & urutan awal salah', () => T.M2.filter(q => !q.hots).forEach(q => { const v = q.v.map(parseNum); v.forEach((a, i) => v.forEach((b, j) => i < j && assert.ok(!eq(a, b)))); assert.ok(misplaced(v, q.dir) > 0); }));
+t('bank soal HOTS C4-C6 ada di kedua misi dan setiap tahap memiliki kunci', () => { assert.strictEqual(T.HOTS1.length,2); assert.strictEqual(T.HOTS2.length,2); [...T.HOTS1,...T.HOTS2].forEach(q => { assert.ok(q.t.includes('HOTS')); assert.strictEqual(q.hots.length,4); q.hots.forEach(stage => assert.strictEqual(stage.filter(o=>o.ok).length,1)); }); });
+t('skor Polya', () => { assert.strictEqual(T.processScore([4, 4, 4, 4]), 100); assert.strictEqual(T.processScore([2, 3, 4, 3]), 75); assert.strictEqual(T.stageScore(false, 0), 1); assert.strictEqual(T.stageScore(true, 5), 2); });
+t('klasifikasi kesalahan', () => assert.strictEqual(T.classifyM1(T.M1[1], F(9, 4)), 'konsep'));
+t('validasi kode', () => { assert.ok(T.validCode('VI-A')); assert.ok(!T.validCode('Budi Santoso')); assert.ok(!T.validCode('ab')); });
+t('CSV aman dari formula injection & kutip', () => { assert.strictEqual(T.csvCell('=SUM(A1)'), '"\'=SUM(A1)"'); assert.strictEqual(T.csvCell('a"b'), '"a""b"'); });
+console.log(n + ' tes lulus');
